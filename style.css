@@ -31,6 +31,9 @@ textarea {
     border: 1px solid #ccc;
     border-radius: 4px;
     font-size: 16px;
+    background-color: transparent; /* Fondo transparente */
+    outline: none; /* Eliminar borde de enfoque */
+    resize: none; /* Evitar redimensionamiento */
 }
 
 button {
