@@ -16,11 +16,14 @@ body {
     overflow: hidden;
     width: 80%;
     max-width: 900px;
+    align-items: stretch; /* Asegura que ambos paneles se estiren */
 }
 
 .left-panel, .right-panel {
     padding: 20px;
     flex: 1;
+    display: flex;
+    flex-direction: column; /* Para que los elementos dentro se alineen en columna */
 }
 
 textarea {
@@ -28,7 +31,7 @@ textarea {
     height: 150px;
     padding: 10px;
     margin-bottom: 10px;
-    border: 1px solid #ccc;
+    border: none; /* Eliminar borde */
     border-radius: 4px;
     font-size: 16px;
     background-color: transparent; /* Fondo transparente */
