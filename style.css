@@ -39,9 +39,13 @@ textarea {
     resize: none; /* Evitar redimensionamiento */
 }
 
+.button-container {
+    display: flex; /* Asegura que los botones se alineen en fila */
+    gap: 10px; /* Espacio entre los botones */
+}
+
 button {
     padding: 10px 20px;
-    margin-right: 10px;
     border: none;
     border-radius: 4px;
     background-color: #007bff;
@@ -61,9 +65,14 @@ button:hover {
     border-radius: 4px;
     background-color: #f8f8f8;
     min-height: 150px;
+    flex: 1; /* Asegura que el texto ocupe el espacio disponible */
 }
 
 #placeholderImage {
     max-width: 100%;
     height: auto;
+}
+
+#copyBtn {
+    align-self: flex-start; /* Alinea el botón de copiar a la izquierda */
 }
