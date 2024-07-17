@@ -12,11 +12,19 @@ body {
     display: flex;
     background-color: #fff;
     border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 50px 50px rgba(0, 0, 0, 0.5); /* Sombra más pronunciada */
+    border: 0.3px dashed #9c9c9c; /* Línea punteada */
     overflow: hidden;
     width: 80%;
     max-width: 900px;
     align-items: stretch; /* Asegura que ambos paneles se estiren */
+    padding: 20px; /* Espaciado interno */
+    margin: 20px; /* Espaciado externo para separar de los bordes */
+    transition: transform 0.3s ease; /* Transición para el efecto de agrandamiento */
+}
+
+.container:hover {
+    transform: scale(1.05); /* Efecto de agrandamiento al pasar el mouse */
 }
 
 .left-panel, .right-panel {
@@ -24,12 +32,15 @@ body {
     flex: 1;
     display: flex;
     flex-direction: column; /* Para que los elementos dentro se alineen en columna */
+    border-radius: 8px; /* Bordes redondeados para cada panel */
+    margin: 10px; /* Espaciado entre los paneles */
 }
 
 textarea {
     width: 100%;
     height: 150px;
     padding: 10px;
+    text-align: center;
     margin-bottom: 10px;
     border: none; /* Eliminar borde */
     border-radius: 4px;
@@ -42,6 +53,12 @@ textarea {
 .button-container {
     display: flex; /* Asegura que los botones se alineen en fila */
     gap: 10px; /* Espacio entre los botones */
+    justify-content: space-evenly;
+}
+
+.alerta {
+    display: flex; /* Asegura que los botones se alineen en fila */
+    justify-content: space-evenly;
 }
 
 button {
@@ -61,6 +78,7 @@ button:hover {
 #outputText {
     font-size: 18px;
     padding: 10px;
+    text-align: center;
     border: 1px solid #ccc;
     border-radius: 4px;
     background-color: #f8f8f8;
@@ -74,5 +92,5 @@ button:hover {
 }
 
 #copyBtn {
-    align-self: flex-start; /* Alinea el botón de copiar a la izquierda */
+    align-self: center; /* Alinea el botón de copiar a la izquierda */
 }

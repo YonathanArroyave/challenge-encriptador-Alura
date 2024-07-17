@@ -7,19 +7,29 @@ document.addEventListener('DOMContentLoaded', () => {
     const decryptBtn = document.getElementById('decryptBtn'); // Botón de desencriptar
     const copyBtn = document.getElementById('copyBtn'); // Botón para copiar el texto al portapapeles
 
+    // Mensaje inicial cuando no hay texto
+    const initialMessage = "Ningún mensaje fue encontrado";
+    outputText.textContent = initialMessage;
+
     // Agrega un evento al botón de encriptar
     encryptBtn.addEventListener('click', () => {
         // Obtén el texto que escribió el usuario
         const text = inputText.value;
         if (text) {
-            // Si hay texto, encríptalo y muéstralo en la pantalla
-            outputText.textContent = encrypt(text);
-            outputText.style.display = 'block';
-            placeholderImage.style.display = 'none';
+            // Valida el texto antes de encriptar
+            if (isValidText(text)) {
+                // Si el texto es válido, encríptalo y muéstralo en la pantalla
+                outputText.textContent = encrypt(text);
+                outputText.style.display = 'block';
+                placeholderImage.style.display = 'none';
+            } else {
+                // Si el texto no es válido, muestra una alerta
+                alert('El texto contiene letras mayúsculas, acentos o caracteres especiales. Solo se permiten letras minúsculas sin acentos.');
+            }
         } else {
-            // Si no hay texto, no muestres nada
-            outputText.textContent = '';
-            outputText.style.display = 'none';
+            // Si no hay texto, muestra el mensaje inicial
+            outputText.textContent = initialMessage;
+            outputText.style.display = 'block';
             placeholderImage.style.display = 'block';
         }
     });
@@ -29,14 +39,20 @@ document.addEventListener('DOMContentLoaded', () => {
         // Obtén el texto que escribió el usuario
         const text = inputText.value;
         if (text) {
-            // Si hay texto, desencríptalo y muéstralo en la pantalla
-            outputText.textContent = decrypt(text);
-            outputText.style.display = 'block';
-            placeholderImage.style.display = 'none';
+            // Valida el texto antes de desencriptar
+            if (isValidText(text)) {
+                // Si el texto es válido, desencríptalo y muéstralo en la pantalla
+                outputText.textContent = decrypt(text);
+                outputText.style.display = 'block';
+                placeholderImage.style.display = 'none';
+            } else {
+                // Si el texto no es válido, muestra una alerta
+                alert('El texto contiene letras mayúsculas, acentos o caracteres especiales. Solo se permiten letras minúsculas sin acentos.');
+            }
         } else {
-            // Si no hay texto, no muestres nada
-            outputText.textContent = '';
-            outputText.style.display = 'none';
+            // Si no hay texto, muestra el mensaje inicial
+            outputText.textContent = initialMessage;
+            outputText.style.display = 'block';
             placeholderImage.style.display = 'block';
         }
     });
@@ -45,8 +61,8 @@ document.addEventListener('DOMContentLoaded', () => {
     copyBtn.addEventListener('click', () => {
         // Obtén el texto encriptado/desencriptado
         const text = outputText.textContent;
-        if (text) {
-            // Si hay texto, cópialo al portapapeles y muestra un mensaje de confirmación
+        if (text && text !== initialMessage) {
+            // Si hay texto y no es el mensaje inicial, cópialo al portapapeles y muestra un mensaje de confirmación
             navigator.clipboard.writeText(text);
             alert('Texto copiado al portapapeles');
         }
@@ -70,5 +86,11 @@ document.addEventListener('DOMContentLoaded', () => {
                    .replace(/ai/g, 'a')
                    .replace(/ober/g, 'o')
                    .replace(/ufat/g, 'u');
+    }
+
+    // Función para validar el texto
+    function isValidText(text) {
+        const regex = /^[a-z\s]*$/;  // Solo permite letras minúsculas y espacios
+        return regex.test(text);
     }
 });
