@@ -1,96 +1,314 @@
+/* Definición de propiedad Houdini */
+/* Definición de una propiedad CSS personalizada llamada --blink-opacity */
+@property --blink-opacity {
+    syntax: "<number>"; /* El valor debe ser un número */
+    inherits: false; /* No se hereda esta propiedad */
+    initial-value: 1; /* Valor inicial de la propiedad es 1 */
+}
+
+/* Animación de parpadeo (comentada como respaldo) */
+/* Esta es una animación de respaldo comentada */
+/*
+@keyframes blink-animation {
+    0%,
+    100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0;
+    }
+}
+*/
+
+/* Definición de la animación de parpadeo usando la propiedad Houdini */
+@keyframes blink-animation {
+    0%,
+    100% {
+        opacity: var(--blink-opacity, 1); /* Usa la propiedad --blink-opacity */
+    }
+    50% {
+        opacity: 0;
+    }
+}
+
+/* Base de estilos */
+/* Estilos globales para la raíz del documento */
+:root {
+    font-family: Inter, sans-serif; /* Fuente global */
+
+    --stripe-color: #fff; /* Color de las rayas */
+    --bg: var(--stripe-color); /* Fondo usando el color de las rayas */
+    --maincolor: var(--bg); /* Color principal usando el fondo */
+}
+
+/* Estilos para el cuerpo del documento */
 body {
-    font-family: Arial, sans-serif;
-    background-color: #f0f0f0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    margin: 0;
+    width: 100cqw; /* Ancho completo del contenedor */
+    min-height: 100cqh; /* Altura mínima completa del contenedor */
+    display: flex; /* Usar flexbox para layout */
+    place-content: center; /* Centrar el contenido */
+    place-items: flex-start center; /* Alinear elementos */
+    justify-content: center; /* Justificar contenido en el centro */
+    align-items: center; /* Alinear elementos en el centro */
+    background: var(--bg); /* Fondo del cuerpo */
 }
 
+/* Estilos para el contenedor principal */
 .container {
-    display: flex;
-    background-color: #fff;
-    border-radius: 8px;
-    box-shadow: 0 50px 50px rgba(0, 0, 0, 0.5); /* Sombra más pronunciada */
+    display: flex; /* Usar flexbox para layout */
+    background-color: #fff; /* Fondo blanco */
+    border-radius: 8px; /* Bordes redondeados */
     border: 0.3px dashed #9c9c9c; /* Línea punteada */
-    overflow: hidden;
-    width: 80%;
-    max-width: 900px;
-    align-items: stretch; /* Asegura que ambos paneles se estiren */
+    overflow: hidden; /* Ocultar desbordamiento */
+    width: 80%; /* Ancho del 80% */
+    max-width: 900px; /* Ancho máximo */
+    align-items: stretch; /* Asegurar que ambos paneles se estiren */
     padding: 20px; /* Espaciado interno */
-    margin: 20px; /* Espaciado externo para separar de los bordes */
+    margin: 20px; /* Espaciado externo */
     transition: transform 0.3s ease; /* Transición para el efecto de agrandamiento */
+    margin-top: 5px
 }
 
-.container:hover {
-    transform: scale(1.05); /* Efecto de agrandamiento al pasar el mouse */
+/* Animación personalizada para el fondo suave */
+@keyframes smoothBg {
+    from {
+        background-position: 50% 50%, 50% 50%; /* Posición inicial del fondo */
+    }
+    to {
+        background-position: 350% 50%, 350% 50%; /* Posición final del fondo */
+    }
 }
 
+/* Estilos para el contenedor envolvente */
+.wrapper {
+    width: 100%; /* Ancho completo */
+    height: auto; /* Altura automática */
+    position: relative; /* Posición relativa */
+}
+
+/* Estilos para el elemento hero */
+.hero {
+    width: 100%; /* Ancho completo */
+    height: 100%; /* Altura completa */
+    min-height: 100vh; /* Altura mínima de la ventana */
+    position: relative; /* Posición relativa */
+    display: flex; /* Usar flexbox para layout */
+    place-content: center; /* Centrar el contenido */
+    place-items: center; /* Alinear elementos en el centro */
+
+    /* Definición de rayas con gradiente lineal repetido */
+    --stripes: repeating-linear-gradient(
+        100deg,
+        var(--stripe-color) 0%,
+        var(--stripe-color) 7%,
+        transparent 10%,
+        transparent 12%,
+        var(--stripe-color) 16%
+    );
+
+    /* Definición de arco iris con gradiente lineal repetido */
+    --rainbow: repeating-linear-gradient(
+        100deg,
+        #60a5fa 10%,
+        #e879f9 15%,
+        #60a5fa 20%,
+        #5eead4 25%,
+        #60a5fa 30%
+    );
+
+    background-image: var(--stripes), var(--rainbow); /* Imagen de fondo compuesta */
+    background-size: 300%, 200%; /* Tamaño del fondo */
+    background-position: 50% 50%, 50% 50%; /* Posición del fondo */
+
+    filter: blur(10px) invert(100%); /* Filtro de desenfoque e inversión de colores */
+
+    mask-image: radial-gradient(ellipse at 100% 0%, black 40%, transparent 70%); /* Máscara radial */
+    &::after {
+        content: ""; /* Contenido vacío */
+        position: absolute; /* Posición absoluta */
+        inset: 0; /* Margen interno cero */
+        background-image: var(--stripes), var(--rainbow); /* Imagen de fondo compuesta */
+        background-size: 200%, 100%; /* Tamaño del fondo */
+        animation: smoothBg 60s linear infinite; /* Animación suave de fondo */
+        background-attachment: fixed; /* Fondo fijo */
+        mix-blend-mode: difference; /* Modo de mezcla */
+    }
+}
+
+/* Cambios de color al estar activado el interruptor */
+:has(:checked) {
+    --stripe-color: #000; /* Cambiar color de las rayas a negro */
+}
+:has(:checked) .hero,
+:has(:checked) .hero::after {
+    filter: blur(10px) opacity(50%) saturate(200%); /* Filtros al estar activado */
+}
+
+/* Estilos para el contenido */
+.content {
+    position: absolute; /* Posición absoluta */
+    inset: 0; /* Margen interno cero */
+    width: 100%; /* Ancho completo */
+    height: 100%; /* Altura completa */
+    display: flex; /* Usar flexbox para layout */
+    place-content: center; /* Centrar el contenido */
+    place-items: center; /* Alinear elementos en el centro */
+    flex-flow: column; /* Flujo en columna */
+    gap: 4.5%; /* Espaciado entre elementos */
+    text-align: center; /* Texto centrado */
+    mix-blend-mode: difference; /* Modo de mezcla */
+    -webbkit-mix-blend-mode: difference; /* Modo de mezcla para Webkit */
+    filter: invert(1); /* Invertir colores */
+}
+
+/* Estilos para el título escalable */
+.h1--scalingSize {
+    font-size: calc(1rem - -5vw); /* Tamaño de fuente escalable */
+    position: relative; /* Posición relativa */
+}
+
+/* Estilos para el interruptor */
+#switch {
+    appearance: none; /* Sin apariencia predeterminada */
+    -webkit-appearance: none; /* Sin apariencia predeterminada para Webkit */
+    opacity: 0; /* Opacidad cero (oculto) */
+}
+
+/* Estilos para la etiqueta del interruptor */
+[for="switch"] {
+    cursor: pointer; /* Cursor de puntero */
+    transition: 0.15s linear(0 0%, 0.16 16.85%, 0.32 31.73%, 1 100%); /* Transición suave */
+    will-change: transform, font-weight; /* Cambio previsible */
+    padding: 0.5rem; /* Espaciado interno */
+}
+
+/* Estilos para la etiqueta del interruptor en estados de interacción */
+[for="switch"]:where(:hover, :active, :focus-within) {
+    transition: 0.6s ease; /* Transición suave */
+    animation: animSwitch 0.2s alternate; /* Animación de cambio */
+    & .icon {
+        animation-play-state: paused; /* Pausar animación */
+    }
+}
+
+/* Animación de cambio */
+@keyframes animSwitch {
+    50% {
+        transform: scale(1.2); /* Escalar */
+        font-weight: 900; /* Fuente en negrita */
+    }
+}
+
+/* Estilos para el ícono Houdini */
+.icon {
+    width: 1lh; /* Ancho basado en la altura de la línea */
+    height: 1lh; /* Altura basada en la altura de la línea */
+    aspect-ratio: 1/1; /* Relación de aspecto cuadrada */
+    padding: 0.25em 0.35rem; /* Espaciado interno */
+    border-radius: calc(1px / 0); /* Bordes redondeados */
+    border: 1px dashed; /* Borde punteado */
+    --blink-opacity: 1; /* Opacidad de parpadeo */
+    animation: blink-animation 2s ease-in-out infinite running; /* Animación de parpadeo */
+}
+
+/* Estilos para el desafío */
+.h1--scalingSize::before {
+    content: attr(data-text); /* Contenido antes del título */
+    position: absolute; /* Posición absoluta */
+    inset: 0; /* Margen interno cero */
+    background: white; /* Fondo blanco */
+    text-shadow: 0 0 1px #ffffff; /* Sombra de texto */
+    background-clip: text; /* Clip de fondo en texto */
+    -webkit-text-fill-color: transparent; /* Color de relleno de texto transparente */
+    background-color: white; /* Color de fondo blanco */
+    -webkit-mask: linear-gradient(#000 0 0) luminance; /* Máscara lineal */
+    mask: linear-gradient(#000 0 0) luminance, alpha; /* Máscara lineal */
+    backdrop-filter: blur(19px) brightness(12.5); /* Filtro de desenfoque y brillo */
+    -webkit-text-stroke: 1px white; /* Trazo de texto */
+    display: flex; /* Usar flexbox para layout */
+    margin: auto; /* Margen automático */
+    margin-bottom: 0px;
+
+    z-index: 1; /* Índice Z */
+    pointer-events: none; /* Sin eventos de puntero */
+}
+
+/* Estilos para los paneles izquierdo y derecho */
 .left-panel, .right-panel {
-    padding: 20px;
-    flex: 1;
-    display: flex;
-    flex-direction: column; /* Para que los elementos dentro se alineen en columna */
-    border-radius: 8px; /* Bordes redondeados para cada panel */
-    margin: 10px; /* Espaciado entre los paneles */
+    padding: 20px; /* Espaciado interno */
+    flex: 1; /* Flex 1 */
+    display: flex; /* Usar flexbox para layout */
+    flex-direction: column; /* Dirección de flex en columna */
+    border-radius: 8px; /* Bordes redondeados */
+    margin: 10px; /* Margen */
 }
 
+/* Estilos para el textarea */
 textarea {
-    width: 100%;
-    height: 150px;
-    padding: 10px;
-    text-align: center;
-    margin-bottom: 10px;
-    border: none; /* Eliminar borde */
-    border-radius: 4px;
-    font-size: 16px;
+    width: 100%; /* Ancho completo */
+    height: 150px; /* Altura fija */
+    padding: 10px; /* Espaciado interno */
+    text-align: center; /* Texto centrado */
+    margin-bottom: 10px; /* Margen inferior */
+    border: none; /* Sin borde */
+    border-radius: 4px; /* Bordes redondeados */
+    font-size: 16px; /* Tamaño de fuente */
     background-color: transparent; /* Fondo transparente */
-    outline: none; /* Eliminar borde de enfoque */
-    resize: none; /* Evitar redimensionamiento */
+    outline: none; /* Sin borde de enfoque */
+    resize: none; /* No redimensionable */
 }
 
+/* Estilos para el contenedor de botones */
 .button-container {
-    display: flex; /* Asegura que los botones se alineen en fila */
-    gap: 10px; /* Espacio entre los botones */
-    justify-content: space-evenly;
+    display: flex; /* Usar flexbox para layout */
+    gap: 10px; /* Espaciado entre botones */
+    justify-content: space-evenly; /* Distribuir botones uniformemente */
 }
 
+/* Estilos para la alerta */
 .alerta {
-    display: flex; /* Asegura que los botones se alineen en fila */
-    justify-content: space-evenly;
+    display: flex; /* Usar flexbox para layout */
+    justify-content: space-evenly; /* Distribuir contenido uniformemente */
 }
 
+/* Estilos para los botones */
 button {
-    padding: 10px 20px;
-    border: none;
-    border-radius: 4px;
-    background-color: #007bff;
-    color: #fff;
-    font-size: 16px;
-    cursor: pointer;
+    padding: 10px 20px; /* Espaciado interno */
+    border: none; /* Sin borde */
+    border-radius: 4px; /* Bordes redondeados */
+    background-color: #007bff; /* Fondo azul */
+    color: #fff; /* Texto blanco */
+    font-size: 16px; /* Tamaño de fuente */
+    cursor: pointer; /* Cursor de puntero */
 }
 
+/* Estilos para los botones en hover */
 button:hover {
-    background-color: #0056b3;
+    background-color: #0056b3; /* Fondo azul oscuro en hover */
 }
 
+/* Estilos para el texto de salida */
 #outputText {
-    font-size: 18px;
-    padding: 10px;
-    text-align: center;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    background-color: #f8f8f8;
-    min-height: 150px;
-    flex: 1; /* Asegura que el texto ocupe el espacio disponible */
+    font-size: 18px; /* Tamaño de fuente */
+    padding: 10px; /* Espaciado interno */
+    text-align: center; /* Texto centrado */
+    border: 0.5px solid #ccc; /* Borde gris claro */
+    border-radius: 4px; /* Bordes redondeados */
+    background-color: #f8f8f8; /* Fondo gris claro */
+    min-height: 150px; /* Altura mínima */
+    flex: 1; /* Flex 1 */
+    overflow-wrap: break-word; /* Ajustar el texto al tamaño del contenedor */
+    word-break: break-word; /* Romper palabras largas */
+    white-space: normal; /* Permitir que el texto se ajuste en múltiples líneas */
 }
 
+/* Estilos para la imagen de marcador de posición */
 #placeholderImage {
-    max-width: 100%;
-    height: auto;
+    max-width: 100%; /* Ancho máximo completo */
+    height: auto; /* Altura automática */
 }
 
+/* Estilos para el botón de copiar */
 #copyBtn {
-    align-self: center; /* Alinea el botón de copiar a la izquierda */
+    align-self: center; /* Alinea el botón al centro */
 }

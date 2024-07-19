@@ -7,21 +7,45 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="container">
-        <div class="left-panel">
-            <textarea id="inputText" placeholder="Ingrese el texto aquí. "></textarea>
-            <p class="alerta">⚠️Solo letras minúsculas y sin acentos</p>
-            <div class="button-container">
-                <button id="encryptBtn">Encriptar</button>
-                <button id="decryptBtn">Desencriptar</button>
-            </div>
+    <section class='wrapper'>
+        <div class='hero'>
         </div>
-        <div class="right-panel">
-           
-            <p id="outputText"></p>
-            <button id="copyBtn">Copiar</button>
+        <div class='content'>
+          <h1 class='h1--scalingSize' data-text='An awesome title' style="margin-top: 0px; margin-bottom: 0px;">Encriptador Alura</h1>
+          <div class="container">
+              
+              <div class="left-panel">
+                  <textarea id="inputText" placeholder="Ingrese el texto aquí. "></textarea>
+                  <p class="alerta">⚠️Solo letras minúsculas y sin acentos</p>
+                  <div class="button-container">
+                      <button id="encryptBtn">Encriptar</button>
+                      <button id="decryptBtn">Desencriptar</button>
+                  </div>
+              </div>
+              <div class="right-panel">
+                 
+                  <p id="outputText"></p>
+                  <button id="copyBtn">Copiar</button>
+              </div>
+          </div>
+          <input type='checkbox' id='switch'>
+          <label for='switch'><span><span class='icon'>→</span> Cambiar Tema</span></label>
         </div>
-    </div>
-    <script src="script.js"></script>
+      </section>
+      <script src="script.js"></script>
 </body>
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
