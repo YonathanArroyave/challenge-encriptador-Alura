@@ -312,3 +312,42 @@ button:hover {
 #copyBtn {
     align-self: center; /* Alinea el botón al centro */
 }
+
+/* Estilos para tablets */
+@media (max-width: 768px) {
+    .container {
+        flex-direction: column; /* Cambiar dirección a columna */
+        align-items: center; /* Alinear elementos al centro */
+    }
+
+    .button-container {
+        justify-content: center; /* Centrar botones */
+        flex-direction: row; /* Colocar botones en una fila */
+    }
+
+    .left-panel, .right-panel {
+        width: 100%; /* Ancho completo */
+        margin: 10px 0; /* Margen vertical */
+    }
+}
+
+/* Estilos para móviles */
+@media (max-width: 375px) {
+    .button-container {
+        flex-direction: column; /* Cambiar dirección a columna */
+    }
+
+    #encryptBtn, #decryptBtn {
+        margin: 5px 0; /* Añadir margen vertical entre botones */
+    }
+
+    .container {
+        flex-direction: column; /* Cambiar dirección a columna */
+        align-items: center; /* Alinear elementos al centro */
+    }
+
+    .left-panel, .right-panel {
+        width: 100%; /* Ancho completo */
+        margin: 10px 0; /* Margen vertical */
+    }
+}
